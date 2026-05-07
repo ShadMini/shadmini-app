@@ -5,42 +5,42 @@ const MODELS_LIBRARY: Record<string, any> = {
     provider: 'github',
     modelId: 'gpt-4o-mini',
     endpoint: 'https://models.inference.ai.azure.com/chat/completions',
-    auth: () => \`Bearer \${process.env.GITHUB_TOKEN}\`,
+    auth: () => `Bearer ${process.env.GITHUB_TOKEN}`,
     description: '⚡ عام | مساعد سريع',
   },
   'deepseek-r1': {
     provider: 'github',
     modelId: 'DeepSeek-R1',
     endpoint: 'https://models.inference.ai.azure.com/chat/completions',
-    auth: () => \`Bearer \${process.env.GITHUB_TOKEN}\`,
+    auth: () => `Bearer ${process.env.GITHUB_TOKEN}`,
     description: '🧠 منطق | تحليل عميق',
   },
   'Llama-3.3-70B-Instruct': {
     provider: 'github',
     modelId: 'Llama-3.3-70B-Instruct',
     endpoint: 'https://models.inference.ai.azure.com/chat/completions',
-    auth: () => \`Bearer \${process.env.GITHUB_TOKEN}\`,
+    auth: () => `Bearer ${process.env.GITHUB_TOKEN}`,
     description: '🦙 باك-إند | كود إبداعي',
   },
   'Mistral-Large-2411': {
     provider: 'github',
     modelId: 'Mistral-Large-2411',
     endpoint: 'https://models.inference.ai.azure.com/chat/completions',
-    auth: () => \`Bearer \${process.env.GITHUB_TOKEN}\`,
+    auth: () => `Bearer ${process.env.GITHUB_TOKEN}`,
     description: '🌪️ ديف أوبس | متقدم',
   },
   'Phi-4': {
     provider: 'github',
     modelId: 'Phi-4',
     endpoint: 'https://models.inference.ai.azure.com/chat/completions',
-    auth: () => \`Bearer \${process.env.GITHUB_TOKEN}\`,
+    auth: () => `Bearer ${process.env.GITHUB_TOKEN}`,
     description: '🔬 علوم | دقيق',
   },
   'Codestral-2501': {
     provider: 'github',
     modelId: 'Codestral-2501',
     endpoint: 'https://models.inference.ai.azure.com/chat/completions',
-    auth: () => \`Bearer \${process.env.GITHUB_TOKEN}\`,
+    auth: () => `Bearer ${process.env.GITHUB_TOKEN}`,
     description: '💻 فول-ستاك | تطوير',
   },
 };
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
     }
     const modelConfig = MODELS_LIBRARY[model];
     if (!modelConfig) {
-      return NextResponse.json({ error: \`نموذج غير مدعوم: \${model}\` }, { status: 400 });
+      return NextResponse.json({ error: `نموذج غير مدعوم: ${model}` }, { status: 400 });
     }
     const response = await fetch(modelConfig.endpoint, {
       method: 'POST',
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
     });
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(\`API Error \${response.status}: \${errorText}\`);
+      throw new Error(`API Error ${response.status}: ${errorText}`);
     }
     const data = await response.json();
     if (data.choices && data.choices[0] && data.choices[0].message) {
