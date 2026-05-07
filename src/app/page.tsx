@@ -32,8 +32,8 @@ export default function Home() {
   const [model, setModel] = useState('gpt-4o-mini');
   const [typingText, setTypingText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -111,9 +111,23 @@ export default function Home() {
     return new Promise((resolve) => {
       let i = 0;
       const interval = setInterval(() => {
-        if (i >= words.length) { clearInterval(interval); setIsTyping(false); setTypingText(''); resolve(current); return; }
-        if (abortRef.current?.signal.aborted) { clearInterval(interval); setIsTyping(false); setTypingText(''); resolve(current + ' ⏹️'); return; }
-        current += words[i]; setTypingText(current); i++;
+        if (i >= words.length) {
+          clearInterval(interval);
+          setIsTyping(false);
+          setTypingText('');
+          resolve(current);
+          return;
+        }
+        if (abortRef.current?.signal.aborted) {
+          clearInterval(interval);
+          setIsTyping(false);
+          setTypingText('');
+          resolve(current + ' ⏹️');
+          return;
+        }
+        current += words[i];
+        setTypingText(current);
+        i++;
       }, 15);
     });
   }, []);
@@ -175,7 +189,7 @@ export default function Home() {
   return (
     <div className="flex h-screen overflow-hidden bg-[#212121] dark:bg-[#212121]">
       <ChatSidebar chats={chatsList} activeChatId={activeChatId} onNewChat={handleNewChat} onSelectChat={handleSelectChat} onDeleteChat={handleDeleteChat} onRenameChat={handleRenameChat} darkMode={darkMode} onToggleDarkMode={handleToggleDarkMode} />
-      <main className="flex flex-1 flex-col overflow-hidden">
+      <main className="flex h-full flex-1 flex-col overflow-hidden bg-[#212121]">
         <header className="flex items-center justify-between border-b border-gray-700 px-4 py-3">
           <select value={model} onChange={(e) => setModel(e.target.value)} className="rounded-lg border border-gray-600 bg-gray-800 px-3 py-1.5 text-sm font-medium text-white focus:outline-none">
             <option value="gpt-4o-mini">GPT-4o Mini</option>
@@ -187,7 +201,9 @@ export default function Home() {
           </select>
           <span className="text-sm text-gray-500">{activeChat?.title || WELCOME_TITLE}</span>
         </header>
-        <ChatWindow messages={isTyping ? [...activeMessages, { role: 'assistant', content: typingText }] : activeMessages} isGenerating={isGenerating || isTyping} onCopy={handleCopy} onRegenerate={handleRegenerate} />
+        <div className="flex-1 overflow-y-auto">
+          <ChatWindow messages={isTyping ? [...activeMessages, { role: 'assistant', content: typingText }] : activeMessages} isGenerating={isGenerating || isTyping} onCopy={handleCopy} onRegenerate={handleRegenerate} />
+        </div>
         <div className="border-t border-gray-700 px-4 py-3">
           <div className="mx-auto flex max-w-3xl items-end gap-3 rounded-2xl border border-gray-600 bg-[#2f2f2f] px-4 py-3">
             <textarea ref={inputRef} id="message-input" value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); } }} rows={1} placeholder="اكتب رسالتك هنا..." className="flex-1 resize-none bg-transparent text-sm text-white placeholder-gray-400 outline-none" />
