@@ -1,168 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
-
 :root {
   --font-cairo: 'Cairo', 'Inter', sans-serif;
-    
-      /* ألوان ShadMini الرئيسية */
-        --blue-deep: #0052CC;
-          --blue-dark: #1E40AF;
-            --orange: #F97316;
-              --orange-dark: #EA580C;
-                --white-soft: #F9FAFB;
-                  --gray-light: #F3F4F6;
-                    --green: #22C55E;
-                      --red: #EF4444;
-                        --slate: #111827;
-                          --gray-mid: #6B7280;
-                            --border-light: #E5E7EB;
-                            }
+  --blue-deep: #0052CC;
+  --blue-dark: #1E40AF;
+  --orange: #F97316;
+  --orange-dark: #EA580C;
+  --white-soft: #F9FAFB;
+  --gray-light: #F3F4F6;
+  --green: #22C55E;
+  --red: #EF4444;
+  --slate: #111827;
+  --gray-mid: #6B7280;
+  --border-light: #E5E7EB;
+}
 
-                            * {
-                              margin: 0;
-                                padding: 0;
-                                  box-sizing: border-box;
-                                  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-                                  body {
-                                    font-family: var(--font-cairo);
-                                      background: #212121;
-                                        color: #ececec;
-                                          direction: rtl;
-                                            height: 100dvh;
-                                              overflow: hidden;
-                                                transition: background 0.2s, color 0.2s;
-                                                }
+body {
+  font-family: var(--font-cairo);
+  background: #212121;
+  color: #ececec;
+  direction: rtl;
+  height: 100dvh;
+  overflow: hidden;
+  transition: background 0.2s, color 0.2s;
+}
 
-                                                /* الوضع الفاتح */
-                                                .light body {
-                                                  background: #ffffff;
-                                                    color: #0d0d0d;
-                                                    }
+.light body {
+  background: #ffffff;
+  color: #0d0d0d;
+}
 
-                                                    /* سكرول بار */
-                                                    ::-webkit-scrollbar {
-                                                      width: 4px;
-                                                      }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
 
-                                                      ::-webkit-scrollbar-track {
-                                                        background: transparent;
-                                                        }
+.user-bubble {
+  background: linear-gradient(135deg, #1E40AF, #0052CC);
+  color: white;
+  border-radius: 1.5rem;
+  border-bottom-right-radius: 0.5rem;
+  box-shadow: 0 4px 16px rgba(0,82,204,0.25);
+}
 
-                                                        ::-webkit-scrollbar-thumb {
-                                                          background: rgba(255, 255, 255, 0.15);
-                                                            border-radius: 99px;
-                                                            }
+.ai-bubble {
+  background: #F3F4F6;
+  border: 1px solid #E5E7EB;
+  color: #111827;
+  border-radius: 1.5rem;
+  border-bottom-left-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
 
-                                                            ::-webkit-scrollbar-thumb:hover {
-                                                              background: rgba(255, 255, 255, 0.25);
-                                                              }
+.dark .ai-bubble {
+  background: #1E293B;
+  border-color: #334155;
+  color: #F1F5F9;
+}
 
-                                                              /* فقاعات المستخدم */
-                                                              .user-bubble {
-                                                                background: linear-gradient(135deg, #1E40AF, #0052CC);
-                                                                  color: white;
-                                                                    border-radius: 1.5rem;
-                                                                      border-bottom-right-radius: 0.5rem;
-                                                                        box-shadow: 0 4px 16px rgba(0, 82, 204, 0.25);
-                                                                        }
+.bubble h1, .bubble h2, .bubble h3 {
+  margin: 1.2rem 0 0.5rem;
+  font-weight: 700;
+  border-bottom: 1px solid #E5E7EB;
+  padding-bottom: 0.3rem;
+}
 
-                                                                        /* فقاعات AI */
-                                                                        .ai-bubble {
-                                                                          background: #F3F4F6;
-                                                                            border: 1px solid #E5E7EB;
-                                                                              color: #111827;
-                                                                                border-radius: 1.5rem;
-                                                                                  border-bottom-left-radius: 0.5rem;
-                                                                                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-                                                                                    }
+.dark .bubble h1, .dark .bubble h2, .dark .bubble h3 {
+  border-bottom-color: #334155;
+}
 
-                                                                                    .dark .ai-bubble {
-                                                                                      background: #1E293B;
-                                                                                        border-color: #334155;
-                                                                                          color: #F1F5F9;
-                                                                                          }
+.bubble a {
+  color: #0052CC;
+  text-decoration: underline;
+  font-weight: 500;
+}
 
-                                                                                          /* Markdown */
-                                                                                          .bubble h1, .bubble h2, .bubble h3 {
-                                                                                            margin: 1.2rem 0 0.5rem;
-                                                                                              font-weight: 700;
-                                                                                                border-bottom: 1px solid #E5E7EB;
-                                                                                                  padding-bottom: 0.3rem;
-                                                                                                  }
+.bubble ul li::marker {
+  color: #F97316;
+}
 
-                                                                                                  .dark .bubble h1,
-                                                                                                  .dark .bubble h2,
-                                                                                                  .dark .bubble h3 {
-                                                                                                    border-bottom-color: #334155;
-                                                                                                    }
+.bubble code {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  background: rgba(0,0,0,0.06);
+  padding: 0.12em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
 
-                                                                                                    .bubble a {
-                                                                                                      color: #0052CC;
-                                                                                                        text-decoration: underline;
-                                                                                                          font-weight: 500;
-                                                                                                          }
+.dark .bubble code {
+  background: rgba(255,255,255,0.1);
+}
 
-                                                                                                          .bubble ul li::marker {
-                                                                                                            color: #F97316;
-                                                                                                            }
+.bubble pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+  font-size: 0.83rem;
+}
 
-                                                                                                            /* كود */
-                                                                                                            .bubble code {
-                                                                                                              font-family: 'Fira Code', 'Courier New', monospace;
-                                                                                                                background: rgba(0, 0, 0, 0.06);
-                                                                                                                  padding: 0.12em 0.4em;
-                                                                                                                    border-radius: 4px;
-                                                                                                                      font-size: 0.85em;
-                                                                                                                      }
+.light .bubble pre {
+  background: #f4f4f4;
+  color: #1e293b;
+  border: 1px solid #E5E7EB;
+}
 
-                                                                                                                      .dark .bubble code {
-                                                                                                                        background: rgba(255, 255, 255, 0.1);
-                                                                                                                        }
+.action-btn {
+  padding: 0.28rem 0.6rem;
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
+  background: #F3F4F6;
+  color: #6B7280;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
-                                                                                                                        .bubble pre {
-                                                                                                                          background: #1e293b;
-                                                                                                                            color: #e2e8f0;
-                                                                                                                              padding: 1rem;
-                                                                                                                                border-radius: 0.75rem;
-                                                                                                                                  overflow-x: auto;
-                                                                                                                                    margin: 0.75rem 0;
-                                                                                                                                      font-size: 0.83rem;
-                                                                                                                                      }
+.action-btn:hover {
+  background: #0052CC;
+  color: white;
+}
 
-                                                                                                                                      .light .bubble pre {
-                                                                                                                                        background: #f4f4f4;
-                                                                                                                                          color: #1e293b;
-                                                                                                                                            border: 1px solid #E5E7EB;
-                                                                                                                                            }
+.dark .action-btn {
+  background: rgba(255,255,255,0.06);
+  color: #94A3B8;
+}
 
-                                                                                                                                            /* أزرار الإجراءات (نسخ، إعادة) */
-                                                                                                                                            .action-btn {
-                                                                                                                                              padding: 0.28rem 0.6rem;
-                                                                                                                                                border-radius: 0.4rem;
-                                                                                                                                                  border: 1px solid transparent;
-                                                                                                                                                    background: #F3F4F6;
-                                                                                                                                                      color: #6B7280;
-                                                                                                                                                        font-size: 0.78rem;
-                                                                                                                                                          font-weight: 500;
-                                                                                                                                                            cursor: pointer;
-                                                                                                                                                              transition: all 0.2s;
-                                                                                                                                                              }
-
-                                                                                                                                                              .action-btn:hover {
-                                                                                                                                                                background: #0052CC;
-                                                                                                                                                                  color: white;
-                                                                                                                                                                  }
-
-                                                                                                                                                                  .dark .action-btn {
-                                                                                                                                                                    background: rgba(255, 255, 255, 0.06);
-                                                                                                                                                                      color: #94A3B8;
-                                                                                                                                                                      }
-
-                                                                                                                                                                      .dark .action-btn:hover {
-                                                                                                                                                                        background: #0052CC;
-                                                                                                                                                                          color: white;
-                                                                                                                                                                          }
+.dark .action-btn:hover {
+  background: #0052CC;
+  color: white;
+}
