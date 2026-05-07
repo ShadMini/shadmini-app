@@ -1,13 +1,15 @@
-import NextAuth, { AuthOptions } from 'next-auth';
+import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import GitHubProvider from 'next-auth/providers/github';
-import { MongoDBAdapter } from '@auth/mongodb-adapter';
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/lib/mongodb';
 
-export const authOptions: AuthOptions = {
-  // محول MongoDB الذي يحفظ جلسات المستخدمين
+if (!process.env.NEXTAUTH_SECRET) {
+  throw new Error('يرجى إضافة NEXTAUTH_SECRET في .env.local');
+}
+
+const handler = NextAuth({
   adapter: MongoDBAdapter(clientPromise),
-  // مزودو تسجيل الدخول
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID || '',
@@ -19,13 +21,12 @@ export const authOptions: AuthOptions = {
     }),
   ],
   pages: {
-    signIn: '/login', // يمكننا إنشاء صفحة تسجيل دخول مخصصة لاحقاً
+    signIn: '/login',
   },
   session: {
     strategy: 'jwt',
   },
   secret: process.env.NEXTAUTH_SECRET,
-};
+});
 
-const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
